@@ -1,0 +1,65 @@
+{
+  "name": "contador-jubilacion",
+  "version": "1.0.0",
+  "description": "Contador de jubilación en tiempo real para escritorio",
+  "main": "dist/main/index.js",
+  "author": "Enrique Juarez",
+  "license": "MIT",
+  "private": true,
+  "homepage": "./",
+  "scripts": {
+    "start": "concurrently \"npm run build:watch\" \"wait-on dist/main/index.js && electron .\"",
+    "dev": "npm run start",
+    "build": "npm run build:main && npm run build:renderer",
+    "build:main": "webpack --config webpack.main.config.js",
+    "build:renderer": "webpack --config webpack.renderer.config.js",
+    "build:watch": "concurrently \"npm run build:main -- --watch\" \"npm run build:renderer -- --watch\"",
+    "dist": "npm run build && electron-builder",
+    "pack": "npm run build && electron-builder --dir",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.25",
+    "@types/react-dom": "^18.2.10",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "concurrently": "^8.2.2",
+    "css-loader": "^6.8.1",
+    "electron": "^26.2.4",
+    "electron-builder": "^24.6.4",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "html-webpack-plugin": "^5.5.3",
+    "style-loader": "^3.3.3",
+    "ts-loader": "^9.4.4",
+    "typescript": "^5.2.2",
+    "wait-on": "^7.0.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "build": {
+    "appId": "com.enriquejuarez.contador-jubilacion",
+    "productName": "Contador Jubilación",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    }
+  }
+}

@@ -1,0 +1,139 @@
+/**
+ * Estilos globales para la aplicación Contador de Jubilación
+ * Diseñado para ventana transparente y integración con el escritorio
+ */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  background: transparent;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 
+               'Helvetica Neue', Arial, sans-serif;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  cursor: default;
+}
+
+.app {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 10px;
+}
+
+.counter-container {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 16px 24px 16px 20px; /* extra derecha para icono */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative; /* para posicionar acciones */
+}
+
+.counter-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Botonera superpuesta para acciones (configuración / interacción) */
+.counter-actions {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  display: flex;
+  gap: 4px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .25s ease;
+  z-index: 10;
+}
+
+.counter-container:hover .counter-actions,
+.counter-actions:focus-within {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
+}
+
+.icon-btn:hover { background: rgba(255,255,255,0.18); }
+.icon-btn:active { transform: scale(.9); }
+.icon-btn.minor { font-size: 13px; display:none; }
+
+.counter-container { position: relative; }
+
+.counter-text {
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+}
+
+/* Animación suave al cambiar valores */
+.time-val {
+  display: inline-block;
+  transition: opacity .3s ease, transform .3s ease;
+  will-change: opacity, transform;
+}
+
+.time-val[data-unit='seconds'] {
+  /* Los segundos cambian más a menudo: animación más sutil */
+  transition: opacity .2s ease;
+}
+
+/* Clase (si la quisiéramos activar manualmente) para pulso */
+.time-val.pulse {
+  animation: pulse-scale .4s ease;
+}
+
+@keyframes pulse-scale {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Efectos de hover sutiles para feedback visual */
+.counter-container:hover {
+  background: rgba(0, 0, 0, 0.8);
+  transition: background 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+}
+
+/* Área extendida invisible para sostener el hover y permitir que aparezca el icono sin clic */
+.counter-container::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  width: 68px;
+  height: 48px;
+}
+
+
+
